@@ -1,22 +1,27 @@
 import { useState, useRef, useEffect } from "react";
 
 export function useDropdown() {
-  const [isOpen, setIsOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+    // Control the Open and Close State of the Dropdown
+    const[isOpen, setIsOpen] = useState(false);
+    // Keep reference of the dropdown container 
+    const ref = useRef<HTMLDivElement>(null);
 
-  const toggle = () => setIsOpen((prev) => !prev);
-  const close = () => setIsOpen(false);
+    // to toggle the open and close state
+    const toggle = ()=> setIsOpen((prev)=>!prev);
+    // Close the Dropdown
+    const close = ()=>setIsOpen(false);
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        close();
+    useEffect(() => {
+      function handleClickOutside(event: MouseEvent) {
+        if (ref.current && !ref.current.contains(event.target as Node)) {
+          close(); //Closes the Dropdown when Clicked Outside
+        }
       }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+  
 
   return {
     isOpen,

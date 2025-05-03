@@ -2,12 +2,17 @@
 import React, { useState, useEffect } from "react";
 import { X, Search, ChevronUp, ChevronDown, Check } from "lucide-react";
 import { useDropdown } from "../hooks/useDropdown";
+import AuthModal from "./AuthModal";
 
 const Navbar = () => {
   const [activeLeftItem, setActiveLeftItem] = useState("Top Locations");
   const [showDropdown, setShowDropdown] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("Internships");
+
+   const[showAuthModal,setShowAuthModal]=useState(false);
+   
+  
 
   const jobTypeDropdown = useDropdown();
 
@@ -28,8 +33,10 @@ const Navbar = () => {
     "Explore Jobs": ["Trending jobs globally", "Remote jobs", "Fresher jobs"],
     "Courses": ["Full Stack Development", "Data Science", "UI/UX Design"],
   };
+  
 
   return (
+    <>
     <nav className="px-4 h-[64px] flex justify-between items-center relative shadow-[0px_0px_4px_rgba(0,0,0,0.25)]">
       {/* Logo */}
       <div className="text-xl font-medium">
@@ -175,14 +182,19 @@ const Navbar = () => {
 
       {/* Login / Sign Up */}
       <div className="shadow-sm rounded-2xl flex">
-        <button className="px-4 py-2 rounded-l-2xl bg-blue-200 hover:bg-blue-300 hover:rounded-r-none cursor-pointer">
+        <button className="px-4 py-2 rounded-l-2xl bg-blue-200 hover:bg-blue-300 hover:rounded-r-none cursor-pointer" onClick={() => setShowAuthModal(true)}>
           Sign Up
         </button>
-        <button className="px-4 py-2 rounded-2xl hover:bg-blue-300 hover:rounded-l-none cursor-pointer">
+        <button className="px-4 py-2 rounded-2xl hover:bg-blue-300 hover:rounded-l-none cursor-pointer" onClick={() => setShowAuthModal(true)}>
           Login
         </button>
       </div>
     </nav>
+    {showAuthModal && (
+    <AuthModal onClose={() => setShowAuthModal(false)} />
+  )}
+
+    </>
   );
 };
 
